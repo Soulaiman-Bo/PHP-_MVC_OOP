@@ -14,9 +14,10 @@ abstract class Controller{
 		return $this->{$this->action}();
 	}
 
-	public function getView($viewmodel, $fullview){
-		$view = 'views/' .  strtolower(get_class($this)) . '/' . $this->action . '.php';
+	public function getView($viewmodel, $fullview = false){
 
+		$view = 'views/' .  strtolower(get_class($this)) . '/' . $this->action . '.php';
+		
 		if($fullview){
 			require('views/main.php');
 		} else {

@@ -7,8 +7,6 @@ class Router{
 
 	public function __construct($request){
 
-		// print_r($request);
-
 		$this->request = $request;
 
 		if($this->request['controller'] == ''){
