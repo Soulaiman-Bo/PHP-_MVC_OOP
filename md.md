@@ -1,1 +1,0 @@
-first draft of The mvc structure.
