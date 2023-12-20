@@ -21,7 +21,7 @@ abstract class Controller{
 		if($fullview){
 			require('views/main.php');
 		} else {
-			require($view);
+			return $view;
 		}
 	}
 

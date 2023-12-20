@@ -27,6 +27,7 @@ abstract class Model
 
 			// Get the last inserted ID (if applicable)
 			$lastInsertId = $this->pdo->lastInsertId();
+			$this->pdo = null;
 
 			return $lastInsertId;
 
@@ -36,6 +37,28 @@ abstract class Model
 			echo "Database error: " . $e->getMessage();
 			return false; 
 		}
+	}
+
+	function selectRecords($table, $columns = "*", $where = null) {
+		// Use prepared statements to prevent SQL injection
+		$sql = "SELECT $columns FROM $table";
+	
+		if ($where !== null) {
+			$sql .= " WHERE $where";
+		}
+	
+		$stmt = $this->pdo->prepare($sql);
+	
+		// Execute the prepared statement
+		$stmt->execute();
+	
+		// Get the result set
+		$result = $stmt->fetchAll();
+	
+		// Close the statement
+		$this->pdo = null;
+	
+		return $result;
 	}
 
 	public function query($query)
