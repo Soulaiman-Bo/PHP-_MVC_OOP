@@ -11,7 +11,7 @@ abstract class Model
 	}
 
 
-	function insertRecord($pdo, $table, $data)
+	function insertRecord($table, $data)
 	{
 		try {
 			// Use prepared statements with placeholders for secure insertion
@@ -20,19 +20,19 @@ abstract class Model
 
 			$sql = "INSERT INTO $table ($columns) VALUES ($values)";
 
-			$stmt = $pdo->prepare($sql);
+			$stmt = $this->pdo->prepare($sql);
 
 			// Bind parameters directly, no need to specify types
 			$stmt->execute(array_values($data));
 
 			// Get the last inserted ID (if applicable)
-			$lastInsertId = $pdo->lastInsertId();
+			$lastInsertId = $this->pdo->lastInsertId();
 
 			return $lastInsertId;
 
 		} catch (PDOException $e) {
 			
-			error_log("Database error: " . $e->getMessage(), 3, "errors.log");
+			error_log("Database error: " . $e->getMessage() ."\n", 3, "errors.log");
 			echo "Database error: " . $e->getMessage();
 			return false; 
 		}
