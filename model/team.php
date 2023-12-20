@@ -7,7 +7,6 @@ class TeamModel extends Model
 		return;
 	}
 	
-
 	private function validateInput($data)
 	{
 		$data = trim($data);
