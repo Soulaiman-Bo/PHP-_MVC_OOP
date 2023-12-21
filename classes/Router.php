@@ -24,8 +24,10 @@ class Router{
 	}
 
 	public function createController(){
+		
 		// Check Class
 		 //print_r($this->controller);
+
 		if(class_exists($this->controller)){
 			$parents = class_parents($this->controller);
 			// Check Extend

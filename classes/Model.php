@@ -53,12 +53,39 @@ abstract class Model
 		$stmt->execute();
 	
 		// Get the result set
-		$result = $stmt->fetchAll();
+		// $result = $stmt->fetchAll();
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+	
+
 	
 		// Close the statement
 		$this->pdo = null;
 	
 		return $result;
+	}
+
+	function selectSingleRecords($table, $columns = "*", $where = null) {
+		// Use prepared statements to prevent SQL injection
+		$sql = "SELECT $columns FROM $table";
+	
+		if ($where !== null) {
+			$sql .= " WHERE $where ;";
+		}
+	
+		$stmt = $this->pdo->prepare($sql);
+	
+		// Execute the prepared statement
+		$stmt->execute();
+	
+		// Get the result set
+		// $result = $stmt->fetchAll();
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+		// Close the statement
+		$this->pdo = null;
+	
+		 return $result;
 	}
 
 	public function query($query)
