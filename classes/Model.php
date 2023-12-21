@@ -88,6 +88,25 @@ abstract class Model
 		 return $result;
 	}
 
+	function updateRecord($table, $data, $id) {
+		$args = array();
+		foreach ($data as $key => $value) {
+			$args[] = "$key = ?";
+		}
+
+		 $sql = "UPDATE $table SET " . implode(',', $args) . " WHERE team_id = $id";
+	
+		$stmt = $this->pdo->prepare($sql);
+
+		$result = $stmt->execute(array_values($data));
+
+		$lastInsertId = $this->pdo->lastInsertId();
+
+		$this->pdo = null;
+	
+		return $result;
+	}
+
 	public function query($query)
 	{
 		$this->stmt = $this->pdo->prepare($query);

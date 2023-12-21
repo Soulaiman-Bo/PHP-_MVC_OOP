@@ -17,7 +17,9 @@
 			<h1 id="title" class="text-center">create Team</h1>
 		</header>
 		<div class="form-wrap">
-			<form action="http://php_mvc_oop.test/Team/addaction" id="addteamform">
+			<form action="http://php_mvc_oop.test/Team/updateaction" id="addteamform">
+
+				<input type="hidden" name="team_id" value="<?php echo $rows['team_id']  ?>" id="team_name" placeholder="Enter team name" class="form-control" required>
 
 				<div class="row">
 					<div class="col-md-6">

@@ -6,7 +6,7 @@ class Router{
 	private $request;
 
 	public function __construct($request){
-
+	
 		$this->request = $request;
 
 		if($this->request['controller'] == ''){
@@ -25,8 +25,10 @@ class Router{
 
 	public function createController(){
 		
-		// Check Class
-		 //print_r($this->controller);
+		$file =  "controller/". strtolower($this->controller) .".php";
+		if(file_exists($file)){
+			require_once $file;
+		}
 
 		if(class_exists($this->controller)){
 			$parents = class_parents($this->controller);
