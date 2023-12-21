@@ -7,8 +7,22 @@ class Team extends Controller
 	{
 		$viewmodel = new TeamModel();
 		$rows = $viewmodel->selectRecords("teams");
+		
 		$view = $this->getView($viewmodel->Index(), false);
 		require_once "$view";
+	}
+
+	protected function update()
+	{
+		$id = $_GET['id'];
+
+		$viewmodel = new TeamModel();
+		$rows = $viewmodel->selectSingleRecords("teams", "*", "team_id = $id");
+		
+	
+
+		 $view = $this->getView($viewmodel->Index(), false);
+		 require_once "$view";
 	}
 
 	protected function add()
