@@ -17,7 +17,7 @@
 			<h1 id="title" class="text-center">create Team</h1>
 		</header>
 		<div class="form-wrap">
-			<form action="http://php_mvc_oop.test/Team/addaction" id="addteamform">
+			<form action="http://php_mvc_oop.test/Team/addaction" id="addteamform" enctype="multipart/form-data">
 
 				<div class="row">
 					<div class="col-md-6">
@@ -59,7 +59,8 @@
 					<div class="col-md-6">
 						<div class="form-group">
 							<label id="logo_url" for="logo_url">Logo</label>
-							<input type="file" name="logo_url" id="logo_url" placeholder="Enter foundation year" class="form-control" required>
+							<input type="file" name="logo_url" id="logo_url" accept="image/*" placeholder="Enter foundation year" class="form-control" required><br>
+
 						</div>
 					</div>
 				</div>
