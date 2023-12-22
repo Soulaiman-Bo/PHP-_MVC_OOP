@@ -30,72 +30,74 @@ abstract class Model
 			$this->pdo = null;
 
 			return $lastInsertId;
-
 		} catch (PDOException $e) {
-			
-			error_log("Database error: " . $e->getMessage() ."\n", 3, "errors.log");
+
+			error_log("Database error: " . $e->getMessage() . "\n", 3, "errors.log");
 			echo "Database error: " . $e->getMessage();
-			return false; 
+			return false;
 		}
 	}
 
-	function selectRecords($table, $columns = "*", $where = null) {
+	function selectRecords($table, $columns = "*", $where = null)
+	{
 		// Use prepared statements to prevent SQL injection
 		$sql = "SELECT $columns FROM $table";
-	
+
 		if ($where !== null) {
 			$sql .= " WHERE $where";
 		}
-	
+
 		$stmt = $this->pdo->prepare($sql);
-	
+
 		// Execute the prepared statement
 		$stmt->execute();
-	
+
 		// Get the result set
 		// $result = $stmt->fetchAll();
 		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-	
 
-	
+
+
 		// Close the statement
 		$this->pdo = null;
-	
+
 		return $result;
 	}
 
-	function selectSingleRecords($table, $columns = "*", $where = null) {
+	function selectSingleRecords($table, $columns = "*", $where = null)
+	{
 		// Use prepared statements to prevent SQL injection
 		$sql = "SELECT $columns FROM $table";
-	
+
 		if ($where !== null) {
 			$sql .= " WHERE $where ;";
 		}
-	
+
 		$stmt = $this->pdo->prepare($sql);
-	
+
 		// Execute the prepared statement
 		$stmt->execute();
-	
+
 		// Get the result set
 		// $result = $stmt->fetchAll();
 		$result = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		// Close the statement
 		$this->pdo = null;
-	
-		 return $result;
+
+		return $result;
 	}
 
-	function updateRecord($table, $data, $id) {
+	function updateRecord($table, $data, $id)
+	{
 		$args = array();
 		foreach ($data as $key => $value) {
 			$args[] = "$key = ?";
 		}
 
-		 $sql = "UPDATE $table SET " . implode(',', $args) . " WHERE team_id = $id";
-	
+		$sql = "UPDATE $table SET " . implode(',', $args) . " WHERE team_id = $id";
+
 		$stmt = $this->pdo->prepare($sql);
 
 		$result = $stmt->execute(array_values($data));
@@ -103,10 +105,25 @@ abstract class Model
 		$lastInsertId = $this->pdo->lastInsertId();
 
 		$this->pdo = null;
-	
+
 		return $result;
 	}
 
+	function deleteRecord($table, $column, $id)
+	{
+		// Use prepared statements to prevent SQL injection
+		$sql = "DELETE FROM $table WHERE $column = $id";
+
+		$stmt = $this->pdo->prepare($sql);
+
+		$result = $stmt->execute();
+
+		$this->pdo = null;
+
+		return $result;
+	}
+
+	
 	public function query($query)
 	{
 		$this->stmt = $this->pdo->prepare($query);
