@@ -4,14 +4,12 @@ require_once "model/team.php";
 
 class Team extends Controller
 {
-
 	protected function show()
 	{
 		$viewmodel = new TeamModel();
 		$rows = $viewmodel->selectRecords("teams");
-
-		$view = $this->getView($viewmodel->Index(), false);
-		require_once "$view";
+		$view = $this->getView();
+		require_once $view;
 	}
 	protected function update()
 	{
@@ -22,7 +20,7 @@ class Team extends Controller
 			$rows = $viewmodel->selectSingleRecords("teams", "*", "team_id = $id");
 
 			if ($rows) {
-				$view = $this->getView($viewmodel->Index(), false);
+				$view = $this->getView();
 				require_once "$view";
 			} else {
 				echo "<h1>ERROR 404: Bad Request</h1>";
@@ -31,13 +29,15 @@ class Team extends Controller
 			echo '<h1>ERROR 404: Page Not Found</h1>';
 		}
 	}
+
 	protected function add()
 	{
 
 		$viewmodel = new TeamModel();
-		$view = $this->getView($viewmodel->Index(), false);
+		$view = $this->getView();
 		require_once "$view";
 	}
+
 	protected function delete()
 	{
 		$id = $_GET['id'];
@@ -51,8 +51,7 @@ class Team extends Controller
 			echo '<h1>ERROR 404: Bad Request</h1>';
 		}
 	}
-
-
+	
 	protected function addaction()
 	{
 
@@ -65,7 +64,7 @@ class Team extends Controller
 			// File properties
 			$fileName = $file["name"];
 			$fileTmpName = $file["tmp_name"];
-			$fileSize = $file["size"];
+			// $fileSize = $file["size"];
 			$fileError = $file["error"];
 
 			$fileExt = pathinfo($fileName, PATHINFO_EXTENSION);
@@ -73,7 +72,7 @@ class Team extends Controller
 			// Generate a unique filename to avoid overwriting
 			$newFileName = $team_name .  "_" . uniqid('', true) . "." . $fileExt;
 
-			
+
 			$new_logo_url = $newFileName;
 
 			$uploadDir = "public/images/";
@@ -85,7 +84,6 @@ class Team extends Controller
 			}
 		}
 
-
 		$viewmodel = new TeamModel();
 		$teamfields = array(
 			'team_name' => $team_name,
@@ -93,7 +91,7 @@ class Team extends Controller
 			'country_name' => $country_name,
 			'stadium_name' => $stadium_name,
 			'stadium_capacity' => $stadium_capacity,
-			'logo_url' => $new_logo_url, 
+			'logo_url' => $new_logo_url,
 			'website_url' => $website_url,
 			'league_name' => $league_name,
 			'division' => $division,

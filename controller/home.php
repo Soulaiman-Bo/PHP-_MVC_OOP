@@ -2,9 +2,12 @@
 
 class Home extends Controller
 {
-
-    protected function index(){
-        echo "<h1>Home</h1>";
+    protected function index()
+    {
+        // $viewmodel = new TeamModel();
+        // $rows = $viewmodel->selectRecords("teams");
+        $view = $this->getView();
+        
+        require_once "$view";
     }
-
 }

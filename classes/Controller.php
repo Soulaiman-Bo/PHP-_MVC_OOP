@@ -14,14 +14,13 @@ abstract class Controller{
 		return $this->{$this->action}();
 	}
 
-	public function getView($viewmodel, $fullview = false){
-
+	public function getView(){
 		$view = 'views/' .  strtolower(get_class($this)) . '/' . $this->action . '.php';
 		
-		if($fullview){
-			require('views/main.php');
-		} else {
+		if(file_exists($view)){
 			return $view;
+		} else {
+			return 'views/404.php';
 		}
 	}
 

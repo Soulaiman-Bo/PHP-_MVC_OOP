@@ -1,6 +1,7 @@
 <?php
 
 class Router{
+	
 	private $controller;
 	private $action;
 	private $request;
@@ -38,19 +39,19 @@ class Router{
 					return new $this->controller($this->action, $this->request);
 				} else {
 					// Method Does Not Exist
-					echo '<h1>ERROR 404: Page Not Found</h1>';
+					require_once "views/404.php";
 					// echo '<h1>Method does not exist</h1>';
 					return;
 				}
 			} else {
 				// Base Controller Does Not Exist
-				echo '<h1>ERROR 404: Page Not Found</h1>';
+				require_once "views/404.php";
 				// echo '<h1>Base Controller Does Not Exist</h1>';
 				return;
 			}
 		} else {
 			// Controller Class Does Not Exist
-			echo '<h1>ERROR 404: Page Not Found</h1>';
+			require_once "views/404.php";
 			// echo '<h1>Controller class does not exist</h1>';
 			return;
 		}
