@@ -17,6 +17,9 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href="http://php_mvc_oop.test/public/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link href='https://fonts.googleapis.com/css?family=Pacifico|Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
     <!-- CSS Files -->
     <link id="pagestyle" href="http://php_mvc_oop.test/public/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
@@ -54,7 +57,7 @@
                     </a>
                 </li>
 
-               
+
 
             </ul>
         </div>
@@ -193,9 +196,9 @@
                             </div>
                         </div>
 
-                        <form action="http://php_mvc_oop.test/Team/addaction" id="addteamform" enctype="multipart/form-data">
-							<input type="hidden" name="team_id" value="<?php echo $rows['team_id']  ?>" id="team_name" placeholder="Enter team name" class="form-control" required>
-							<div class="card-body">
+                        <form action="http://php_mvc_oop.test/Team/updateaction" id="addteamform" enctype="multipart/form-data">
+                            <input type="hidden" name="team_id" value="<?php echo $rows['team_id']  ?>" id="team_name" placeholder="Enter team name" class="form-control" required>
+                            <div class="card-body">
                                 <p class="text-uppercase text-sm">User Information</p>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -213,7 +216,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label id="stadium_name" class="form-control-label" for="stadium_name">Stadium Name</label>
-                                            <input type="text" name="stadium_name"  value="<?php echo $rows['stadium_name']  ?>" id="stadium_name" placeholder="Enter foundation year" class="form-control" required>
+                                            <input type="text" name="stadium_name" value="<?php echo $rows['stadium_name']  ?>" id="stadium_name" placeholder="Enter foundation year" class="form-control" required>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
@@ -242,7 +245,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label"id="country_name" for="country_name">Country Name</label>
+                                            <label class="form-control-label" id="country_name" for="country_name">Country Name</label>
                                             <input type="text" name="country_name" value="<?php echo $rows['country_name']  ?>" id="country_name" placeholder="Enter Country name" class="form-control" required>
                                         </div>
                                     </div>
@@ -275,7 +278,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                             <textarea name="descripton" id="descripton"></textarea>
+                                            <textarea name="descripton" id="descripton"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -303,8 +306,10 @@
     <script src="http://php_mvc_oop.test/public/assets/js/bootstrap.min.js"></script>
     <script src="http://php_mvc_oop.test/public/assets/js/perfect-scrollbar.min.js"></script>
     <script src="http://php_mvc_oop.test/public/assets/js/smooth-scrollbar.min.js"></script>
-    <script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
 
+    <script>
         tinymce.init({
             selector: 'textarea',
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
@@ -336,12 +341,24 @@
                     body: formData,
                 });
 
+                if (response.ok) {
+                    const responseData = await response.json();
+
+                    if (responseData.message != "Team Updated successfully!") {
+                        throw new Error(`Error: ${response.status} - ${response.message}`);
+                    }
+
+                    swal("Update Team", responseData.message, "success")
+                    console.log(responseData.message);
+                }
+
                 if (!response.ok) {
                     throw new Error(`Error: ${response.status} - ${response.message}`);
                 }
 
 
             } catch (error) {
+                swal("Update Team", "Failed to update", "error")
                 console.error(error);
             }
 

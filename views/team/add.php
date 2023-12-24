@@ -17,6 +17,10 @@
     <!-- Font Awesome Icons -->
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <link href="http://php_mvc_oop.test/public/assets/css/nucleo-svg.css" rel="stylesheet" />
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css'>
+    <link rel="stylesheet" href="./style.css">
+
+
     <!-- CSS Files -->
     <link id="pagestyle" href="http://php_mvc_oop.test/public/assets/css/argon-dashboard.css?v=2.0.4" rel="stylesheet" />
 </head>
@@ -238,7 +242,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label class="form-control-label"id="country_name" for="country_name">Country Name</label>
+                                            <label class="form-control-label" id="country_name" for="country_name">Country Name</label>
                                             <input type="text" name="country_name" id="country_name" placeholder="Enter Country name" class="form-control" required>
                                         </div>
                                     </div>
@@ -271,7 +275,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                             <textarea name="descripton" id="descripton"></textarea>
+                                            <textarea name="descripton" id="descripton"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -282,9 +286,9 @@
                                     </div>
                                 </div>
 
+
                             </div>
                         </form>
-
 
                     </div>
                 </div>
@@ -299,8 +303,10 @@
     <script src="http://php_mvc_oop.test/public/assets/js/bootstrap.min.js"></script>
     <script src="http://php_mvc_oop.test/public/assets/js/perfect-scrollbar.min.js"></script>
     <script src="http://php_mvc_oop.test/public/assets/js/smooth-scrollbar.min.js"></script>
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js'></script>
+    <script src="./script.js"></script>
     <script>
-
         tinymce.init({
             selector: 'textarea',
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
@@ -332,12 +338,24 @@
                     body: formData,
                 });
 
+                if (response.ok) {
+                    const responseData = await response.json();
+
+                    if (responseData.message != 'Team inserted successfully!') {
+                        throw new Error(`Error: ${response.status} - ${response.message}`);
+                    }
+
+                    swal("Create Team", responseData.message, "success")
+                    console.log(responseData.message);
+                }
+
                 if (!response.ok) {
+                    
                     throw new Error(`Error: ${response.status} - ${response.message}`);
                 }
 
-
             } catch (error) {
+                swal("Create Team", "Failed to isert", "error")
                 console.error(error);
             }
 

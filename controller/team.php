@@ -75,7 +75,7 @@ class Team extends Controller
 
 			$new_logo_url = $newFileName;
 
-			$uploadDir = "public/images/";
+			$uploadDir = "public/uploads/";
 
 			if ($fileError === 0) {
 				move_uploaded_file($fileTmpName, $uploadDir . $newFileName);
